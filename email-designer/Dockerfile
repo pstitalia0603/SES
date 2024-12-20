@@ -6,16 +6,16 @@ WORKDIR /app
 # Copy package.json and package-lock.json first to leverage Docker cache
 COPY package*.json ./
 
-# Install dependencies (including Angular CLI)
+# Install Angular CLI globally and install project dependencies
 RUN npm install -g @angular/cli && npm install --legacy-peer-deps
 
 # Copy the rest of the application files
 COPY . .
 
-# Build the Angular application
-RUN npm run build --prod  # Use `--prod` to build for production
+# Run the build
+RUN npm run build --prod  # This will build the Angular app in production mode
 
-# Use Nginx to serve the built app
+# Serve the built app using Nginx
 FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
 
