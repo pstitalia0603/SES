@@ -7,7 +7,7 @@ WORKDIR /app
 # Copy the package.json and package-lock.json (if it exists) to the container
 COPY package*.json ./
 
-# Clean npm cache and install dependencies with legacy peer deps
+# Clean npm cache and install dependencies
 RUN npm cache clean --force
 RUN npm install --legacy-peer-deps
 
