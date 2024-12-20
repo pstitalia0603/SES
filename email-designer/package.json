@@ -15,10 +15,11 @@
   },
   "dependencies": {},
   "devDependencies": {},
-"scripts": {
-  "build": "webpack --mode production",  // Example for Webpack
-  "start": "serve -s dist"               // Example for serving the app
-},
+  "scripts": {
+    "start": "ng serve --host 0.0.0.0 --port 3002",  # Ensure Angular app listens on port 3002
+    "build": "ng build --prod",  # Build the Angular app in production mode
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SendWithSES/Drag-and-Drop-Email-Designer.git"
