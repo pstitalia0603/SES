@@ -16,7 +16,7 @@ COPY . .
 # Run the build command (adjusted based on the package.json)
 RUN npm run build
 
-# Expose port 80 (or 3002 if you want) to be used by the container
+# Expose port 80 (we will map this to 3002 in the compose file)
 EXPOSE 80
 
 # Start the app using the appropriate command
