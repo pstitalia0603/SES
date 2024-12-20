@@ -1,23 +1,23 @@
-# Use a compatible Node.js version
-FROM node:18 AS builder
+# Use a Node.js image as the base image
+FROM node:16-alpine
 
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json first to leverage Docker cache
+# Copy the package.json and package-lock.json (if it exists) to the container
 COPY package*.json ./
 
-# Install Angular CLI globally and install project dependencies
-RUN npm install -g @angular/cli && npm install --legacy-peer-deps
+# Install dependencies
+RUN npm install
 
-# Copy the rest of the application files
+# Copy the entire project to the container
 COPY . .
 
-# Run the build
-RUN npm run build --prod  # This will build the Angular app in production mode
+# Run the build command (adjusted based on the package.json)
+RUN npm run build
 
-# Serve the built app using Nginx
-FROM nginx:alpine
-COPY --from=builder /app/dist /usr/share/nginx/html
-
+# Expose port 80 (or 3002 if you want) to be used by the container
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+
+# Start the app using the appropriate command
+CMD ["npm", "start"]
