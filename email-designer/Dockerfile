@@ -1,5 +1,5 @@
-# Step 1: Use a node image
-FROM node:16-slim
+# Step 1: Use a Node.js image with version 18 or higher
+FROM node:18-slim
 
 # Step 2: Set working directory in the container
 WORKDIR /app
