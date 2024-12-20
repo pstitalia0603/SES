@@ -1,13 +1,24 @@
 version: '3.8'
 
 services:
-  email-designer:
+  email-designer-builder:
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - "3002:80"  # Expose port 3002 on the host to port 80 in the container
+    working_dir: /app
+    command: bash -c "npm install && npm run build --prod"
+    volumes:
+      - .:/app
     environment:
       - NODE_ENV=production
-    command: bash -c "npm install && npm run build --prod && npm run start"
+    restart: always
+
+  email-designer-nginx:
+    image: nginx:alpine
+    ports:
+      - "3002:80"  # Expose port 3002 on the host to port 80 in the container (Nginx)
+    volumes:
+      - ./dist:/usr/share/nginx/html  # Serve built app from /dist directory
+    depends_on:
+      - email-designer-builder
     restart: always
