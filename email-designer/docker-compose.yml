@@ -12,4 +12,4 @@ services:
     environment:
       - NODE_ENV=production
     restart: always
-    command: bash -c "npm install && npm run build && npm start"  # Adjust if needed
+    command: bash -c "npm install && npm run build && npm start"  # This builds and starts the app
