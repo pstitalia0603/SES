@@ -4,10 +4,10 @@ services:
   angular-app:
     build: .
     ports:
-      - "3002:3002"  # Expose port 3002 on the host and map it to port 3002 in the container
+      - "3002:3002"  # Expose port 3002 on the host and container
     environment:
       - NODE_ENV=production
     volumes:
-      - .:/app  # Mount the current directory to /app in the container (for development)
-    restart: always  # Restart the container if it stops unexpectedly
+      - .:/app  # Mount the current directory to /app in the container
+    restart: always
     command: bash -c "npm install --legacy-peer-deps && npm run build --prod && npm start -- --port 3002"
