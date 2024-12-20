@@ -1,15 +1,13 @@
 version: '3.8'
 
 services:
-  email-designer:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  angular-app:
+    build: .
     ports:
-      - "3002:80"  # Expose port 3002 on the host and map it to port 80 in the container
-    volumes:
-      - .:/app
+      - "3002:3002"  # Expose port 3002 on the host and map it to port 3002 in the container
     environment:
       - NODE_ENV=production
-    restart: always
-    command: bash -c "npm install && npm run build && npm start"  # This builds and starts the app
+    volumes:
+      - .:/app  # Mount the current directory to /app in the container (for development)
+    restart: always  # Restart the container if it stops unexpectedly
+    command: bash -c "npm install --legacy-peer-deps && npm run build --prod && npm start -- --port 3002"
