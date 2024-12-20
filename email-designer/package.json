@@ -15,9 +15,9 @@
   },
   "dependencies": {},
   "devDependencies": {},
-  "scripts": {
-  "build": "ng build --prod",
-  "test": "echo \"Error: no test specified\" && exit 1"
+"scripts": {
+  "build": "webpack --mode production",  // Example for Webpack
+  "start": "serve -s dist"               // Example for serving the app
 },
   "repository": {
     "type": "git",
