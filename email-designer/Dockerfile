@@ -7,7 +7,10 @@ WORKDIR /app
 # Copy the package.json and package-lock.json files into the container
 COPY package*.json ./
 
-# Install dependencies
+# Install Angular CLI globally
+RUN npm install -g @angular/cli
+
+# Install dependencies (including Angular dependencies)
 RUN npm install --legacy-peer-deps
 
 # Copy the rest of the application files into the container
