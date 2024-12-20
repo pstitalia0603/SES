@@ -3,11 +3,11 @@ FROM node:18 AS builder
 
 WORKDIR /app
 
-# Copy package.json and package-lock.json first to install dependencies
+# Copy package.json and package-lock.json first to leverage Docker cache
 COPY package*.json ./
 
-# Clean npm cache and install dependencies
-RUN npm cache clean --force && npm install
+# Install dependencies (with latest npm)
+RUN npm install -g npm@latest && npm install --legacy-peer-deps
 
 # Copy the rest of the application files
 COPY . .
@@ -15,7 +15,7 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Use Nginx to serve the built app
+# Serve the built app with Nginx
 FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
 
