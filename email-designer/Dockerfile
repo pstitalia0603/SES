@@ -1,26 +1,23 @@
-# Step 1: Use a Node.js image with version 18 or higher
-FROM node:18-slim
+# Use an official Node.js runtime as the base image
+FROM node:18
 
-# Step 2: Set working directory in the container
+# Set the working directory inside the container
 WORKDIR /app
 
-# Step 3: Install Angular CLI globally
-RUN npm install -g @angular/cli
-
-# Step 4: Copy the package.json and package-lock.json
+# Copy the package.json and package-lock.json files into the container
 COPY package*.json ./
 
-# Step 5: Install dependencies with legacy-peer-deps flag to resolve potential peer dependency issues
+# Install dependencies
 RUN npm install --legacy-peer-deps
 
-# Step 6: Copy all the source code to the working directory
+# Copy the rest of the application files into the container
 COPY . .
 
-# Step 7: Build the Angular application in production mode
+# Build the Angular application
 RUN npm run build --prod
 
-# Step 8: Expose port 3002 for the application
+# Expose port 3002
 EXPOSE 3002
 
-# Step 9: Run the Angular app using the "ng serve" command
-CMD ["npm", "start"]
+# Command to start the application
+CMD ["npm", "start", "--", "--port", "3002"]
