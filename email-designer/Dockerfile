@@ -1,5 +1,5 @@
-# Use a Node.js image as the base image
-FROM node:16-alpine
+# Use a specific Node.js version as the base image
+FROM node:18-alpine
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -7,17 +7,18 @@ WORKDIR /app
 # Copy the package.json and package-lock.json (if it exists) to the container
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+# Clean npm cache and install dependencies with legacy peer deps
+RUN npm cache clean --force
+RUN npm install --legacy-peer-deps
 
 # Copy the entire project to the container
 COPY . .
 
-# Run the build command (adjusted based on the package.json)
+# Run the build command
 RUN npm run build
 
 # Expose port 80 (we will map this to 3002 in the compose file)
 EXPOSE 80
 
-# Start the app using the appropriate command
+# Start the app
 CMD ["npm", "start"]
