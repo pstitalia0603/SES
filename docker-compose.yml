@@ -12,6 +12,5 @@ services:
     volumes:
       - .:/app  # Mount the current directory to /app in the container
     restart: always  # Automatically restart the container if it stops
-    # Set the working directory to ensure npm install happens in the right folder
     working_dir: /app
     command: bash -c "npm install && npm run build && npm start"  # Run npm install, build, and start the application
