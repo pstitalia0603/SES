@@ -1,11 +1,10 @@
-FROM node:18 AS builder
+version: '3.8'
 
-WORKDIR /app
-
-# Install system dependencies
-RUN apt-get update && apt-get install -y python3 make g++ && rm -rf /var/lib/apt/lists/*
-
-COPY package*.json ./
-RUN npm install
-COPY . .
-RUN npm run build
+services:
+  email-designer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3002:80" # Expose port 3002
+    restart: always # Automatically restart the service
