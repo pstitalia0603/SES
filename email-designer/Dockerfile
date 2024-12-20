@@ -16,6 +16,9 @@ RUN npm install --legacy-peer-deps
 # Copy the rest of the application files into the container
 COPY . .
 
+# List the files to verify the directory structure
+RUN ls -la /app
+
 # Build the Angular application
 RUN npm run build --prod
 
