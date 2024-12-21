@@ -1,0 +1,153 @@
+<!-- this is for both larger and smaller devices view purpose -->
+
+<div class="container-fluid">
+  <!-- Header Bar  -->
+  <div
+    class="row"
+    [ngClass]="
+      mobileView || windowResizeWidth ? 'small-device-header' : 'header-bar'
+    "
+  >
+    <div
+      class="col-5 template-selector d-flex align-items-center"
+      *ngIf="!mobileView && !windowResizeWidth"
+    >
+      <button
+        class="m-2 t-btn"
+        *ngFor="let template of templateTypes"
+        [class.selected]="selectedTemplateType === template.type"
+        (click)="typeSelected(template.type)"
+      >
+        {{ template.name }}
+      </button>
+    </div>
+
+    <div
+      class="d-flex right-btns col-7 justify-content-end"
+      *ngIf="!mobileView && !windowResizeWidth"
+    >
+      <button class="m-2 t-btn" (click)="uploadImage()">Upload image</button>
+      <button class="m-2 t-btn" (click)="preview()">
+        <span>Preview</span>
+      </button>
+      <button class="m-2 t-btn" (click)="exportHtml()">
+        <span>Export HTML</span>
+      </button>
+    </div>
+
+    <!-- Hamburger icon & small devices view  -->
+
+    <div
+      class="hamburger-wrapper col-2 col-sm-1 d-flex align-items-center justify-content-center p-0"
+      *ngIf="mobileView"
+    >
+      <button
+        class="hamburger-icon align-items-center"
+        (click)="selectedTemplateType === 'ses_designer' ? openSideNav() : ''"
+        [disabled]="selectedTemplateType !== 'ses_designer'"
+      >
+        <i class="fa fa-bars"></i>
+      </button>
+    </div>
+
+    <div
+      class="d-flex right-btns col-10 col-sm-11 align-items-center action-btns"
+      *ngIf="mobileView || windowResizeWidth"
+      [ngClass]="{
+        'width-full': windowResizeWidth && !mobileView
+      }"
+    >
+      <ng-container>
+        <button
+          class="m-2 t-btn"
+          *ngFor="let template of templateTypes"
+          [class.selected]="selectedTemplateType === template.type"
+          (click)="typeSelected(template.type)"
+        >
+          {{ template.name }}
+        </button>
+      </ng-container>
+      <button class="m-2 t-btn" (click)="uploadImage()">Upload image</button>
+      <button class="m-2 t-btn" (click)="preview()">
+        <span>Preview</span>
+      </button>
+      <button class="m-2 t-btn" (click)="exportHtml()">
+        <span>Export HTML</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- if you pass input is isMobileView use this code. this is for smaller devices view purpose  -->
+
+  <!-- Designer Section -->
+
+  <div *ngIf="selectedTemplateType && !mobileView" class="row">
+    <lib-email-designer
+      [type]="selectedTemplateType"
+      [template]="selectedTemplate"
+      #emailEditor
+      class="px-0"
+      (imageSelectionTriggered)="onImageSelectionTrigger($event)"
+      (imageUploadTriggered)="onImageUploadTrigger($event)"
+      (emailContentChanged)="onEmailContentChange($event)"
+      [isMobileView]="false"
+    ></lib-email-designer>
+  </div>
+
+  <div *ngIf="mobileView">
+    <lib-email-designer
+      [type]="selectedTemplateType"
+      [template]="selectedTemplate"
+      #emailEditor
+      class="px-0"
+      (imageSelectionTriggered)="onImageSelectionTrigger($event)"
+      (imageUploadTriggered)="onImageUploadTrigger($event)"
+      (emailContentChanged)="onEmailContentChange($event)"
+      [isMobileView]="mobileView"
+      (closeSlideabr)="closeSideNav()"
+    ></lib-email-designer>
+  </div>
+</div>
+
+<!-- .. END HERE ... -->
+
+<!-- This is for larger screens ..-->
+
+<!-- <div class="container-fluid">
+  <div class="row header-bar">
+    <div class="col-5 template-selector d-flex align-items-center">
+      <button
+        class="m-2 t-btn"
+        *ngFor="let template of templateTypes"
+        [class.selected]="selectedTemplateType === template.type"
+        (click)="typeSelected(template.type)"
+      >
+        {{ template.name }}
+      </button>
+    </div>
+
+    <div class="d-flex right-btns col-7 justify-content-end">
+      <button class="m-2 t-btn" (click)="uploadImage()">Upload image</button>
+      <button class="m-2 t-btn" (click)="preview()">
+        <span>Preview</span>
+      </button>
+      <button class="m-2 t-btn" (click)="exportHtml()">
+        <span>Export HTML</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="row">
+    <lib-email-designer
+      [type]="selectedTemplateType"
+      [template]="selectedTemplate"
+      #emailEditor
+      class="px-0"
+      (imageSelectionTriggered)="onImageSelectionTrigger($event)"
+      (imageUploadTriggered)="onImageUploadTrigger($event)"
+      (emailContentChanged)="onEmailContentChange($event)"
+    ></lib-email-designer>
+  </div>
+</div> -->
+
+<!-- ....larger screens Code END HERE... -->

@@ -1,0 +1,85 @@
+.header-bar,
+.small-device-header {
+  background-color: #eee;
+  height: 55px;
+  border: 1px solid #ccc;
+  border-top: 0;
+  .t-btn {
+    background-color: #aaa;
+    color: white;
+    border: none;
+    padding: 7px 15px;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .logo {
+    opacity: 0.5;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  .selected {
+    background-color: #3ed39b;
+  }
+  .right-btns {
+    .t-btn {
+      display: flex;
+      align-items: center;
+    }
+    i {
+      font-size: 24px;
+    }
+    span {
+      margin-left: 6px;
+    }
+  }
+}
+
+.header-bar .t-btn:hover {
+  background-color: #555;
+}
+
+/* tablets and smaller screens styles */
+
+.small-device-header {
+  white-space: nowrap;
+  .hamburger-wrapper {
+    border-right: 1px solid #bbb;
+    align-items: center;
+  }
+  .action-btns {
+    overflow-x: scroll;
+  }
+  .width-full {
+    width: 100%;
+  }
+}
+
+.hamburger-icon {
+  font-size: 28px;
+  border: none;
+  color: #bbb;
+  min-width: 54px;
+  height: 54px;
+  background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:disabled {
+    opacity: 0.3;
+  }
+}
+
+@media (min-width: 500px) and (max-width: 576px) {
+  .col-2 {
+    width: 10%;
+  }
+  .col-10 {
+    width: 90%;
+  }
+}
+
+lib-email-designer {
+  padding-inline: 0px;
+}
