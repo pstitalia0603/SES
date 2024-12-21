@@ -2,12 +2,12 @@ version: '3.8'
 
 services:
   angular-app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "3002:3002"  # Expose port 3002 on the host and container
+      - "4200:4200"
+    volumes:
+      - .:/app
     environment:
       - NODE_ENV=production
-    volumes:
-      - .:/app  # Mount the current directory to /app in the container
-    restart: always
-    command: bash -c "npm install --legacy-peer-deps && npm run build --prod && npm start -- --port 3002"
