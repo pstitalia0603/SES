@@ -1,0 +1,91 @@
+<div class="modal-header">
+  <span class="title" [ngClass]="{ 'mobile-modal-title': isMobileView }"
+    >Image Repository</span
+  >
+  <button
+    type="button"
+    class="close"
+    data-dismiss="modal"
+    (click)="closeModal()"
+  >
+    &times;
+  </button>
+</div>
+
+<div
+  class="modal-body flex-vm"
+  (dragover)="onDragOver($event)"
+  (drop)="onDrop($event)"
+>
+  <div
+    class="d-flex flex-wrap gap-4 my-3 justify-content-center"
+    *ngIf="imagesLoaded; else loader"
+  >
+    <!-- Upload Image Section -->
+    <div class="image-file-uploader bg-white" (click)="fileInput.click()">
+      <div class="uploaded-image-wrapper text-center">
+        <!-- <fa-icon [icon]="faUploadIcon"></fa-icon> -->
+        <div>Click To Upload JPEG or PNG or GIF</div>
+        <div>2MB Per Image</div>
+        <input
+          type="file"
+          (change)="uploadImage($event)"
+          #fileInput
+          accept=".jpg,.jpeg,.png,.gif,image/jpeg,image/png,image/gif"
+          class="upload-image-input"
+          multiple
+        />
+      </div>
+    </div>
+    <ng-container *ngFor="let image of uploadedImages; let i = index">
+      <!-- bg-white -->
+      <div
+        class="image-container flex flex-col items-start p-2 bg-white box-border"
+        *ngIf="image && image.url"
+      >
+        <div
+          class="image-wrapper flex items-center justify-center"
+          (mouseover)="uploadedImages[i].mouseover = true"
+          (mouseleave)="uploadedImages[i].mouseover = false"
+        >
+          <img class="image" src="{{ image.thumbnailUrl }}" />
+          <div
+            class="image-file-overlay"
+            *ngIf="!imageNotClick && uploadedImages[i].mouseover"
+          >
+            <div class="image-file-overlay-inner">
+              <button
+                class="select-btn"
+                (click)="imageNotClick ? null : selectImage(image)"
+              >
+                <span>Select</span>
+              </button>
+            </div>
+          </div>
+          <span
+            class="copyIconBox"
+            *ngIf="uploadedImages[i].mouseover"
+            (click)="copyUrl(uploadedImages[i].url)"
+          >
+            <!-- <fa-icon [icon]="faCopyIcon" class="icons"></fa-icon> -->
+          </span>
+          <span
+            class="deleteIconBox"
+            *ngIf="uploadedImages[i].id && uploadedImages[i].mouseover"
+            (click)="deleteImage(uploadedImages[i].id, i)"
+          >
+            <!-- <fa-icon [icon]="faTrashIcon" class="icons"></fa-icon> -->
+          </span>
+        </div>
+        <span class="image-name truncate">{{ image.name }}</span>
+        <span class="image-type truncate">{{ image.type }}</span>
+      </div>
+    </ng-container>
+  </div>
+
+  <ng-template #loader>
+    <div class="loader-wrapper">
+      <i class="fa fa-spinner loading" aria-hidden="true"></i>
+    </div>
+  </ng-template>
+</div>
