@@ -1,0 +1,8 @@
+/* Global Styles */
+/* import email-designer styles */
+@import '../node_modules/@send-with-ses/ng-email-designer/src/lib/email-editor.css';
+@import '../node_modules/@send-with-ses/ng-email-designer/src/lib/theme.scss';
+
+body {
+  margin: 0;
+}
