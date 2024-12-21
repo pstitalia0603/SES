@@ -1,13 +1,12 @@
 version: '3.8'
 
 services:
-  angular-app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  email-designer:
+    image: node:18
+    container_name: drag-drop-email-designer
+    working_dir: /usr/src/app
     ports:
       - "4200:4200"
     volumes:
-      - .:/app
-    environment:
-      - NODE_ENV=production
+      - .:/usr/src/app
+    command: bash -c "npm install && npm run dev"
