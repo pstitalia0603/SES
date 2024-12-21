@@ -6,11 +6,24 @@ services:
     container_name: drag-drop-email-designer
     working_dir: /usr/src/app
     ports:
-      - "4200:3000"  # Exposes port 3000 of the container to port 4200 on the host
+      - "4200:4200"  # Exposes Angular's default port 4200
     volumes:
       - .:/usr/src/app
     environment:
       - NODE_ENV=production
-    command: bash -c "npm install && npm run build && npm run start"
+    command: bash -c "npm install && npm run build -- --prod && npm run start"
     restart: always  # Ensures the app restarts automatically if it crashes
 
+  # For development, you can use this service to run a development server
+  email-designer-dev:
+    image: node:18
+    container_name: drag-drop-email-designer-dev
+    working_dir: /usr/src/app
+    ports:
+      - "4200:4200"  # Exposes Angular's default port 4200 for dev server
+    volumes:
+      - .:/usr/src/app
+    environment:
+      - NODE_ENV=development
+    command: bash -c "npm install && npm run start"  # Uses Angular's dev server
+    restart: always  # Ensures the app restarts automatically if it crashes
