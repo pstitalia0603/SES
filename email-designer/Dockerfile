@@ -1,29 +1,29 @@
-# Use the official Node.js image as the base image
-FROM node:18
+# Use official Node.js image as the base image
+FROM node:18 AS build
 
-# Set the working directory inside the container
-WORKDIR /app
+# Set working directory in the container
+WORKDIR /usr/src/app
 
-# Install Angular CLI globally
-RUN npm install -g @angular/cli
-
-# Copy package.json and package-lock.json to the working directory
+# Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Install project dependencies
+# Install dependencies
 RUN npm install
 
-# Copy the entire project to the working directory
+# Copy the entire project
 COPY . .
 
-# Ensure the Angular workspace is correctly set up
-# (Optional) You can run Angular CLI commands to verify the workspace if needed
+# Build the Angular app
+RUN npm run build -- --prod
 
-# Build the Angular application
-RUN ng build --configuration production
+# Install an HTTP server to serve the built app
+FROM nginx:alpine
 
-# Expose the port the app runs on
-EXPOSE 4200
+# Copy the build files from the previous image to the Nginx web server
+COPY --from=build /usr/src/app/dist/ /usr/share/nginx/html
 
-# Start the application
-CMD ["npm", "start"]
+# Expose port 80 for the Nginx server
+EXPOSE 80
+
+# Start the Nginx server
+CMD ["nginx", "-g", "daemon off;"]
