@@ -6,7 +6,9 @@ services:
     container_name: drag-drop-email-designer
     working_dir: /usr/src/app
     ports:
-      - "4200:4200"
+      - "4200:3000"  # Exposes port 3000 of the container to port 4200 on the host
     volumes:
       - .:/usr/src/app
-    command: bash -c "npm install && npm run dev"
+    environment:
+      - NODE_ENV=production
+    command: bash -c "npm install && npm run build && npm run start"
