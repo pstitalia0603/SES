@@ -1,29 +1,29 @@
-# Use an official Node.js runtime as the base image
+# Use the official Node.js image as the base image
 FROM node:18
 
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the package.json and package-lock.json files into the container
-COPY package*.json ./
-
 # Install Angular CLI globally
 RUN npm install -g @angular/cli
 
-# Install dependencies (including Angular dependencies)
-RUN npm install --legacy-peer-deps
+# Copy package.json and package-lock.json to the working directory
+COPY package*.json ./
 
-# Copy the rest of the application files into the container
+# Install project dependencies
+RUN npm install
+
+# Copy the entire project to the working directory
 COPY . .
 
-# List the files to verify the directory structure
-RUN ls -la /app
+# Ensure the Angular workspace is correctly set up
+# (Optional) You can run Angular CLI commands to verify the workspace if needed
 
 # Build the Angular application
-RUN npm run build --prod
+RUN ng build --configuration production
 
-# Expose port 3002
-EXPOSE 3002
+# Expose the port the app runs on
+EXPOSE 4200
 
-# Command to start the application
-CMD ["npm", "start", "--", "--port", "3002"]
+# Start the application
+CMD ["npm", "start"]
